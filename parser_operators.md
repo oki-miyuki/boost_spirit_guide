@@ -18,3 +18,38 @@
 | *A* \|\| *B* | NaryParser | *A* に0回または1回マッチし、*B* に0回または1回マッチする。ただし *A* と *B* 共にマッチしない場合を除く |
 | *A* ^ *B* | NaryParser | *A* と *B* は、それぞれ0回または1回マッチし、かつ、*A* と *B* のマッチする順序は問わない |  
 
+```
+C++: *( A % B )
+#include <boost/spirit/include/qi.hpp>
+#include <vector>
+#include <iostream>
+#include <string>
+
+namespace qi = boost::spirit::qi;
+
+int main() {
+	std::string input = "12345 223  54321";
+	std::vector<int> v;
+	qi::parse( input.begin(), input.end(), *( qi::int_ % +qi::standard::blank), v ); 
+	for(int n: v) { std::cout << n << std::endl; }
+	return 0;
+}
+```
+
+```
+C++: A >> B
+#include <boost/spirit/include/qi.hpp>
+#include <vector>
+#include <iostream>
+#include <string>
+
+namespace qi = boost::spirit::qi;
+
+int main() {
+	std::string input = "12345 223  54321";
+	std::vector<int> v;
+	qi::parse( input.begin(), input.end(), *( qi::int_ % +qi::standard::blank_), v ); 
+	for(int n: v) { std::cout << n << std::endl; }
+	return 0;
+}
+```
