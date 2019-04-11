@@ -46,10 +46,11 @@ C++: A >> B
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "12345 223  54321";
-	std::vector<int> v;
-	qi::parse( input.begin(), input.end(), *( qi::int_ % +qi::standard::blank_), v ); 
-	for(int n: v) { std::cout << n << std::endl; }
+	std::string input = "12345,abcd,54321";
+	int n, m;
+	std::string s;
+	qi::parse( input.begin(), input.end(), qi::int_ >> ',' >> +(qi::standard::char_ - ',') >> ',' >> qi::int_, n, s, m ); 
+	std::cout << n << "," << s << "," << m << std::endl;
 	return 0;
 }
 ```
