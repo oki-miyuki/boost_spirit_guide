@@ -35,6 +35,7 @@ int main() {
 	return 0;
 }
 ```
+ブランク(スペース・タブ)で区切られた数値を取り出す
 
 ```
 C++: A >> B
@@ -49,8 +50,47 @@ int main() {
 	std::string input = "12345,abcd,54321";
 	int n, m;
 	std::string s;
-	qi::parse( input.begin(), input.end(), qi::int_ >> ',' >> +(qi::standard::char_ - ',') >> ',' >> qi::int_, n, s, m ); 
+	qi::parse( input.begin(), input.end(), 
+	  qi::int_ >> ',' >> +(qi::standard::char_ - ',') >> ',' >> qi::int_,
+	  n, s, m ); 
 	std::cout << n << "," << s << "," << m << std::endl;
 	return 0;
 }
 ```
+qi::lit(',') は implicit conversion(暗黙の型変換)により ',' と省略して記述する事ができます。
+ただし、後述するセマンティック・アクションを適応する場合は、'A'[action] と省略形で記述するとコンパイルエラーになるので気をつけましょう。
++(qi::standard::char_ - ',') は、','以外の文字から構成される文字列にマッチします。
+
+```
+C++: A > B
+#include <boost/spirit/include/qi.hpp>
+#include <vector>
+#include <iostream>
+#include <string>
+
+namespace qi = boost::spirit::qi;
+
+int main() {
+	std::string input = "dog(2pochi),cat(tama)";
+	std::vector<std::string> v;
+	qi::parse( input.begin(), input.end(), 
+	  *( 
+	    (
+	     //("dog(" >> +qi::standard::char_("a-z")  >> ')')
+	     ("dog(" > +qi::standard::char_("a-z")  > ')')
+	     | (+qi::omit[qi::standard::alpha] > '(' > +qi::standard::alnum > ')')
+	    ) % ','
+	  )
+	  , v ); 
+	for(std::string n: v) { std::cout << n << std::endl; }
+	return 0;
+}
+```
+ルール中に出てくる qi::omit は、後述するパーサ・ディレクティブで説明します。
+cat を v へ入れたくないので qi::omit で指定しています。
+dog( まで解析し、2pochi はアルファベットa-zの範囲外なのでマッチしません。<BR>
+コメントアウトされているようにオペレータ >> であれば巻き戻って、| 以降の次のルールで解析する事ができますが、オペレータ > を使用しているため 2pochi に遭遇した段階で解析を終了します。
+巻き戻った場合、(+qi::omit[qi::standard::alpha] > '(' > +qi::standard::alnum > ')') のルールで処理されるようになります。
+
+
+
