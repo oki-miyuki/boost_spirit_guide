@@ -6,10 +6,8 @@ namespace qi = boost::spirit::qi;
 
 int main() {
 	std::string input = "こんにちは"; // Windows では SJIS解釈、他では UTF-8解釈
-	auto s = input.begin();
-	auto e = input.end();
-	qi::parse( s, e, qi::lit("こんにちは") );
-	//qi::parse( s, e, qi::lit("こんにちわ") );
-	std::cout << ((s == e) ? "マッチ" : "エラー") << std::endl;
+	std::string n;
+	qi::parse( input.begin(), input.end(), qi::lit("こんにちわ"), n );
+	std::cout << n << std::endl;
 	return 0;
 }

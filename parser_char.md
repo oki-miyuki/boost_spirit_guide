@@ -15,10 +15,10 @@
   shift_jis, euc_jp という名前空間は存在しませんが、standard に含まれます。  
   utf-8 は standard に含まれます。ただし、utf-8 を iostream の codecvt を経由して wchar_t で処理する場合は standard_wide に含まれます。
  
-| 文字型(属性) | ルール | サンプル |
+| 文字型(属性) | ルール | 説明 |
 |:--|:--|:--|
-|char|qi::standard::char_| char 例 |
-|wchar_t|qi::standard_wide::char_| wchar 例 |
+|char|qi::standard::char_| 1文字にマッチします。 |
+|wchar_t|qi::standard_wide::char_| 1文字ワイド・キャラにマッチします。 |
 
 
 １文字読み込む(char版) 
@@ -61,22 +61,21 @@ int main() {
 
 ### charリテラル
 
-| 文字型(属性) | ルール | サンプル |
-|:--|:--|:--|
-|'X' (固定文字) | qi::lit('X') | |
-|L'X' (固定文字) | qi::lit(L'X') | |
+| 文字型(属性) | ルール | サンプル | 説明 |
+|:--|:--|:--|:--|
+|qi::unused_type | qi::lit(1文字キャラ値) | qi::lit('X') | 1文字値にマッチします。|
+|qi::unused_type | qi::lit(1文字ワイドキャラ値) | qi::lit(L'X') | 1文字ワイドキャラ・リテラルにマッチします。|
 
 ### 文字列リテラル
 
-| 文字型(属性) | ルール | サンプル |
+| 文字型(属性) | ルール | サンプル | 説明 |
 |:--|:--|:--|
-|"文字列定数"|qi::lit("文字列定数")| 文字列定数1 例 |
-|L"文字列定数"|qi::lit(L"文字列定数")| 文字列定数2 例 |
-
+|qi::unused_type |qi::lit(文字列)| qi::lit("固定文字列") | 指定された文字列にマッチします。|
+|qi::unused_type |qi::lit(ワイドキャラ文字列)| qi::lit(L"固定文字列") | 指定されたワイドキャラ文字列にマッチします。|
 
 文字列定数と同じかチェックする(char版)
 ```
-c++:文字列定数1 例
+c++:文字列定数 例
 #include <boost/spirit/include/qi.hpp>
 #include <iostream>
 #include <string>
@@ -85,17 +84,32 @@ namespace qi = boost::spirit::qi;
 
 int main() {
 	std::string input = "こんにちは"; // Windows では SJIS解釈、他では UTF-8解釈
-	std::string n;
-	qi::parse( input.begin(), input.end(), qi::lit("こんにちは"), n );
-	// こちらだと入力とマッチしないので解析に失敗し何も出力されない
-	//qi::parse( input.begin(), input.end(), qi::lit("こんにちわ"), n );
-	std::cout << n << std::endl;
+	auto s = input.begin();
+	auto e = input.end();
+	qi::parse( s, e, qi::lit("こんにちは") );
+	//qi::parse( s, e, qi::lit("こんにちわ") );
+	std::cout << ((s == e) ? "マッチ" : "エラー") << std::endl;
 	return 0;
 }
 ```
+  qi::parse に渡されるイテレータは入力値の解析範囲を示します。  
+  引数の開始位置は参照渡しで、解析後にマッチが完了できた位置になっています。  
+  s == e ならば、フルマッチを示し、s != e ならば、マッチしなかった事を示します。  
+  コメントアウトされた行で解析をすると、結果がマッチからエラーに変わります。　　
 
+### 文字列
 
-文字列定数と同じかチェックする(wchar_t版)
+| 文字型(属性) | ルール | サンプル |
+|:--|:--|:--|
+|std::string|+(qi::standard::char_)||
+|std::wstring|+(qi::standard_wide::char_)||
+
+  **ここでルールに + という記号が登場しました。** ルールに適応できる演算子で、1回以上の繰り返しを示します。  
+  似た演算子で * という0回以上の繰り返しを示すものもあります。  
+  正規表現では同じ意味を持つ + * は後置演算子ですが、C++ の文法で実現するために前置演算子として実装されています。  
+  char型の繰り返しをstring型として取り出せるところが巧妙です。  
+
+文字列と同じかチェックする(wchar_t版)
 ```
 c++:文字列定数2 例
 #include <boost/spirit/include/qi.hpp>
@@ -114,17 +128,6 @@ int main() {
 }
 ```
 
-### 文字列
-
-| 文字型(属性) | ルール | サンプル |
-|:--|:--|:--|
-|std::string|+(qi::standard::char_)|
-|std::wstring|+(qi::standard_wide::char_)|
-
-  **ここでルールに + という記号が登場しました。** ルールに適応できる演算子で、1回以上の繰り返しを示します。  
-  似た演算子で * という0回以上の繰り返しを示すものもあります。  
-  正規表現では同じ意味を持つ + * は後置演算子ですが、C++ の文法で実現するために前置演算子として実装されています。  
-  char型の繰り返しをstring型として取り出せるところが巧妙です。  
 
 ## 文字条件指定
   qi::standard::char_, qi::standard_wide::char_ に対してマッチする文字を指定する事が可能です。  
