@@ -1,7 +1,7 @@
 # 数値パーサ
   数値型に応じた組み込み型のパーサが用意されています。(namespace qi = boost::spirit::qi)
   
-| 数値型 | ルール |
+| 数値型(属性) | ルール |
 |:--|:--|
 |short|qi::short_|
 |unsigned short|qi::ushort_|
@@ -15,6 +15,8 @@
 |double|qi::double_|
 |long double|qi::long_double|
 
+
+doubleの値を読み込む
 ```
 c++:double 例
 #include <boost/spirit/include/qi.hpp>
@@ -33,6 +35,8 @@ int main() {
 }
 ```
 
+
+floatの値を読み込む
 ```
 c++:float 例
 #include <boost/spirit/include/qi.hpp>
@@ -50,6 +54,8 @@ int main() {
 }
 ```
 
+
+unsigned shortの値を読み込む
 ```
 c++:unsigned short 例
 #include <boost/spirit/include/qi.hpp>
