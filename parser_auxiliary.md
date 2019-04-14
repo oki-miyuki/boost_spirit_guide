@@ -30,9 +30,9 @@ int main() {
 	qi::parse( input.begin(), input.end(), 
 	  *(
 	    (
-    	   (qi::lit("one") >> qi::attr(1)) 
-	    | (qi::lit("two") >> qi::attr(2)) 
-	    | (qi::lit("three") >> qi::attr(3))
+    	   (qi::lit("one") > qi::attr(1)) 
+	    | (qi::lit("two") > qi::attr(2)) 
+	    | (qi::lit("three") > qi::attr(3))
 	    ) % qi::standard::blank
 	   ), 
 	   v 

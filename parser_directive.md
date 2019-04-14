@@ -16,4 +16,33 @@
 | matches[] | マッチしたかどうかをbool値として取り出します。|
 | skip[] | leximeまたはno_skipディレクティブ内でSkipルールを再適用します。|
 | skip(p)[] | skip ディレクティブに p を Skipルールとして置き換えます。|
+| hold[] | ルールの値をキープします。|
+| as<T>()[] | Tはコンテナ型で、ルール内の値をT型に展開します。直接使用する事はないでしょう。|
+| as_string[] | std::string 型へ展開します。直接使用する事はないでしょう。|
+| as_wstring[] | std::wstring 型へ展開します。直接使用する事はないでしょう。|
+| expect[] | ルールにマッチしない場合はエラーとします。|
+ 
+  Skipper に関するもの no_skip, skip は、後に別途解説します。 
+ 
+raw, repeat サンプル 
+```
+C++: raw, repeat 例
+#include <boost/spirit/include/qi.hpp>
+#include <vector>
+#include <iostream>
+#include <string>
 
+namespace qi = boost::spirit::qi;
+
+int main() {
+	std::string input = "04142019";
+	int year, month, day;
+	qi::parse( input.begin(), input.end(), 
+	     qi::raw[qi::repeat(2)[qi::standard::digit]] 
+	     >> qi::raw[qi::repeat(2)[qi::standard::digit]] 
+	     >> qi::raw[qi::repeat(4)[qi::standard::digit]] 
+	  , month, day, year ); 
+	std::cout << year << "/" << month << "/" << day << std::endl;
+	return 0;
+}
+```
