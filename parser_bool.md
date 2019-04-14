@@ -1,6 +1,6 @@
 # boolパーサ
-  boolパーサが用意されています。(namespace qi = boost::spirit::qi)
-  組込型として用意されているので、bool型はこちらを使用しましょう。
+  boolパーサが用意されています。(namespace qi = boost::spirit::qi)  
+  組込型として用意されているので、bool型はこちらを使用しましょう。  
 
 | 型(属性) | ルール |
 | bool | qi::bool_ | 
