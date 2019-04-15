@@ -66,6 +66,8 @@ int main() {
 |qi::unused_type | qi::lit(1文字キャラ値) | qi::lit('X') | 1文字値にマッチします。|
 |qi::unused_type | qi::lit(1文字ワイドキャラ値) | qi::lit(L'X') | 1文字ワイドキャラ・リテラルにマッチします。|
 
+  qi::unused_type とは、属性においては値として取り出されない型を示します。  
+
 ### 文字列リテラル
 
 | 文字型(属性) | ルール | サンプル | 説明 |
@@ -109,7 +111,7 @@ int main() {
   正規表現では同じ意味を持つ + * は後置演算子ですが、C++ の文法で実現するために前置演算子として実装されています。  
   char型の繰り返しをstring型として取り出せるところが巧妙です。  
 
-文字列と同じかチェックする(wchar_t版)
+文字列を取り出す(wchar_t版)
 ```
 c++:文字列定数2 例
 #include <boost/spirit/include/qi.hpp>
@@ -121,7 +123,7 @@ namespace qi = boost::spirit::qi;
 int main() {
 	std::wstring input = L"こんにちは";
 	std::wstring n;
-	qi::parse( input.begin(), input.end(), qi::lit(L"こんにちは"), n );
+	qi::parse( input.begin(), input.end(), +qi::standard_wide::char_, n );
 	std::wcout.imbue(std::locale(""));
 	std::wcout << n << std::endl;
 	return 0;
