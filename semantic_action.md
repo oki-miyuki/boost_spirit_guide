@@ -48,3 +48,57 @@ int main() {
 	return 0;
 }
 ```
+
+Context, bool& の引数を加える事ができます。
+```
+C++:semantic action 例3
+#include <boost/spirit/include/qi.hpp>
+#include <iostream>
+#include <vector>
+
+namespace qi = boost::spirit::qi;
+
+void do_action(const int& n, qi::unused_type ctx, bool& abort) {
+  std::cout << n << std::endl;
+  if( n > 2 ) abort = false; // ルールをマッチさせない
+}
+
+int main() {
+	std::string input = "0 1 2 3 4";
+	qi::parse( input.begin(), input.end(), *(qi::int_[do_action] % ' ')	);
+	return 0;
+}
+```
+
+## Bind
+
+  関数やアダプタなどを Bind する事ができます。  
+  bind系のエラーに遭遇した時は [bind.troubleshooting](https://www.boost.org/doc/libs/1_70_0/libs/bind/doc/html/bind.html#bind.troubleshooting) が参考になります。
+
+std::bind 例    
+```
+C++:semantic action bind 例
+#include <boost/spirit/include/qi.hpp>
+#include <iostream>
+#include <functional>
+
+namespace qi = boost::spirit::qi;
+
+struct foo {
+  void do_action(const int& n) {
+    std::cout << n << std::endl;
+  }
+  void parse(const std::string& input) {
+    	qi::parse( input.begin(), input.end(), qi::int_[std::bind(&foo::do_action, this, std::placeholders::_1)] ); 
+	}
+};
+
+int main() {
+	std::string input = "123";
+	foo f;
+	f.parse( input );
+	return 0;
+}
+```
+
+

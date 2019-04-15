@@ -22,7 +22,6 @@ C++: qi::attr 例
 #include <string>
 
 namespace qi = boost::spirit::qi;
-namespace ph = boost::phoenix;
 
 int main() {
 	std::string input = "one two three";
