@@ -3,12 +3,15 @@
 #include <iostream>
 
 namespace qi = boost::spirit::qi;
-//namespace ph = boost::phoenix;
+namespace ph = boost::phoenix;
+
+namespace foo {
+	int value_;
+}
 
 int main() {
 	std::string input = "2";
-	int n;
-	qi::parse( input.begin(), input.end(), qi::int_[qi::_val = qi::_1 * 2], n 	);
-	std::cout << n << std::endl;
+	qi::parse( input.begin(), input.end(), qi::int_[ph::ref(foo::value_) = qi::_1] 	);
+	std::cout << foo::value_ << std::endl;
 	return 0;
 }

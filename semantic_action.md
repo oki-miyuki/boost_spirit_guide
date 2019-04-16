@@ -102,4 +102,73 @@ int main() {
 }
 ```
 
+## Placeholders
 
+  同名の placeholders が存在し、使うライブラリによって名前空間が異なります。  
+  placeholders がわからない人は、この説明を飛ばしてかまいません。  
+  後で必要と感じた時に読むと理解できると思います。  
+  ライブラリと名前空間の対応表を示します。(namespace qi = boost::spirit::qi)  
+
+| ライブラリ | 名前空間 | 例 |
+|:--|:--|:--|
+| boost::bind | global namespace | ::_1, ::_2, ::_3 |
+| std::bind | std::placeholders | std::placeholders::_1 |
+| boost::lambda | boost::lambda | boost::lambda::_1 |
+| boost::phoenix | qi | qi::_val, qi::_1, qi::_2, qi::_3 |
+
+## Pheonix
+
+  動作や式を埋め込む事ができます。  
+  機能が豊富、かつ、説明が難しいのでサンプルを見ていきましょう。  
+  namespace qi = boost::spirit::qi;  
+  namespace ph = boost::phoenix;  
+  
+### Pheonix placeholders
+  placeholders として使用できるのがルールの属性(出力先)を示す qi::_val と、  
+  ルール中のパーサに対応する値 qi::_1, qi::_2, ... です。
+
+qi::_val 例
+```
+C++: qi::_val
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/phoenix.hpp>
+#include <iostream>
+
+namespace qi = boost::spirit::qi;
+//namespace ph = boost::phoenix;
+
+int main() {
+	std::string input = "2";
+	int n;
+	qi::parse( input.begin(), input.end(), qi::int_[qi::_val = qi::_1 * 2], n 	);
+	std::cout << n << std::endl;
+	return 0;
+}
+```
+  qi::int_ でパースされた値 qi::_1 を2倍して、qi::int_ の属性値として代入しています。  
+  qi::_2 以降は、基本の段階では使用しません。
+
+### Pheonix ref
+  変数 variable の参照を ph::ref(variable) で埋め込む事ができます。  
+
+ph::ref 例
+```
+C++: ph::ref 
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/phoenix.hpp>
+#include <iostream>
+
+namespace qi = boost::spirit::qi;
+namespace ph = boost::phoenix;
+
+namespace foo {
+	int value_;
+}
+
+int main() {
+	std::string input = "2";
+	qi::parse( input.begin(), input.end(), qi::int_[ph::ref(foo::value_) = qi::_1] 	);
+	std::cout << foo::value_ << std::endl;
+	return 0;
+}
+```
