@@ -19,11 +19,11 @@ void do_action1() { std::cout << "hello"; }
 void do_action2() { std::cout << " action" << std::endl; }
 
 int main() {
-	std::string input = " ";
-	qi::parse( input.begin(), input.end(), 
-	     qi::eps[do_action1] >> ' ' >> qi::eps[do_action2]
-	);
-	return 0;
+  std::string input = " ";
+  qi::parse( input.begin(), input.end(), 
+       qi::eps[do_action1] >> ' ' >> qi::eps[do_action2]
+  );
+  return 0;
 }
 ```
 
@@ -39,13 +39,13 @@ namespace qi = boost::spirit::qi;
 void do_action(const std::vector<int>& v) { for(int n: v ) { std::cout << n << std::endl; } }
 
 int main() {
-	std::string input = "1 2";
-	std::vector<int> v;
-	qi::parse( input.begin(), input.end(), 
-	  qi::as<std::vector<int>>()[qi::int_ >> ' ' >> qi::int_][do_action],
-	  v
-	);
-	return 0;
+  std::string input = "1 2";
+  std::vector<int> v;
+  qi::parse( input.begin(), input.end(), 
+    qi::as<std::vector<int>>()[qi::int_ >> ' ' >> qi::int_][do_action],
+    v
+  );
+  return 0;
 }
 ```
 
@@ -64,9 +64,9 @@ void do_action(const int& n, qi::unused_type ctx, bool& abort) {
 }
 
 int main() {
-	std::string input = "0 1 2 3 4";
-	qi::parse( input.begin(), input.end(), *(qi::int_[do_action] % ' ')	);
-	return 0;
+  std::string input = "0 1 2 3 4";
+  qi::parse( input.begin(), input.end(), *(qi::int_[do_action] % ' ')  );
+  return 0;
 }
 ```
 
@@ -138,11 +138,11 @@ namespace qi = boost::spirit::qi;
 //namespace ph = boost::phoenix;
 
 int main() {
-	std::string input = "2";
-	int n;
-	qi::parse( input.begin(), input.end(), qi::int_[qi::_val = qi::_1 * 2], n 	);
-	std::cout << n << std::endl;
-	return 0;
+  std::string input = "2";
+  int n;
+  qi::parse( input.begin(), input.end(), qi::int_[qi::_val = qi::_1 * 2], n );
+  std::cout << n << std::endl;
+  return 0;
 }
 ```
   qi::int_ でパースされた値 qi::_1 を2倍して、qi::int_ の属性値として代入しています。  
@@ -162,14 +162,14 @@ namespace qi = boost::spirit::qi;
 namespace ph = boost::phoenix;
 
 namespace foo {
-	int value_;
+  int value_;
 }
 
 int main() {
-	std::string input = "2";
-	qi::parse( input.begin(), input.end(), qi::int_[ph::ref(foo::value_) = qi::_1] 	);
-	std::cout << foo::value_ << std::endl;
-	return 0;
+  std::string input = "2";
+  qi::parse( input.begin(), input.end(), qi::int_[ph::ref(foo::value_) = qi::_1]   );
+  std::cout << foo::value_ << std::endl;
+  return 0;
 }
 ```
 
@@ -186,20 +186,20 @@ namespace qi = boost::spirit::qi;
 namespace ph = boost::phoenix;
 
 struct foo {
-	int value_;
+  int value_;
 
   void parse(const std::string& input) {
     qi::parse( input.begin(), input.end(), 
-      qi::int_[ph::bind( &foo::value_, this ) = qi::_1 - 1] 	);
+      qi::int_[ph::bind( &foo::value_, this ) = qi::_1 - 1]   );
     std::cout << foo::value_ << std::endl;  
   }
 };
 
 int main() {
-	std::string input = "2";
-	foo f;
-	f.parse(input);
-	return 0;
+  std::string input = "2";
+  foo f;
+  f.parse(input);
+  return 0;
 }
 ```
 
