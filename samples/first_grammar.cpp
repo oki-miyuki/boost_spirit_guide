@@ -12,13 +12,13 @@ struct my_grammar
   // 返される値(属性)は int なので int のインスタンス関数型を指定します 
   : qi::grammar<Iterator, int(), Skipper>
 {
-	// 構文の内部で使用するルールのメンバ変数
-	qi::rule<Iterator, int(), Skipper>  start_;
-	// ベース型である qi::grammar に渡す開始ルールは、
-	// qi::grammar<Iterator, int(), Skipper> と同様に
-	// テンプレート・パラメータを一致させて(qi::rule<Iterator,int(),Skipper>)おく必要があります。
-	my_grammar() : my_grammar::base_type(start_, "my_grammar") {
-		start_ = qi::int_; // スタートのルールを記述します(パーサ基本の通り)。
+  // 構文の内部で使用するルールのメンバ変数
+  qi::rule<Iterator, int(), Skipper>  start_;
+  // ベース型である qi::grammar に渡す開始ルールは、
+  // qi::grammar<Iterator, int(), Skipper> と同様に
+  // テンプレート・パラメータを一致させて(qi::rule<Iterator,int(),Skipper>)おく必要があります。
+  my_grammar() : my_grammar::base_type(start_, "my_grammar") {
+    start_ = qi::int_; // スタートのルールを記述します(パーサ基本の通り)。
   }
 };
 

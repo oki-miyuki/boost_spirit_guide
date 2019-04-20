@@ -4,6 +4,10 @@
   パーサを組み合わせてルールを構築し、ルールを組み合わせて構文(grammar)を構築します。  
   
   以降、解析には、parse ではなく、Skipper を指定できる phrase_parse 関数を使用していきます。  
+  また、  
+  namespace qi = boost::spirit::qi;  
+  namespace ph = boost::pheonix;  
+  は省略していきます。    
 
 ```
   template <typename Iterator, typename Expr, typename Skipper,   
@@ -33,13 +37,13 @@ struct my_grammar
   // 返される値(属性)は int なので int のインスタンス関数型を指定します 
   : qi::grammar<Iterator, int(), Skipper>
 {
-	// 構文の内部で使用するルールのメンバ変数
-	qi::rule<Iterator, int(), Skipper>  start_;
-	// ベース型である qi::grammar に渡す開始ルールは、
-	// qi::grammar<Iterator, int(), Skipper> と同様に
-	// テンプレート・パラメータを一致させて(qi::rule<Iterator,int(),Skipper>)おく必要があります。
-	my_grammar() : my_grammar::base_type(start_, "my_grammar") {
-		start_ = qi::int_; // スタートのルールを記述します(パーサ基本の通り)。
+  // 構文の内部で使用するルールのメンバ変数
+  qi::rule<Iterator, int(), Skipper>  start_;
+  // ベース型である qi::grammar に渡す開始ルールは、
+  // qi::grammar<Iterator, int(), Skipper> と同様に
+  // テンプレート・パラメータを一致させて(qi::rule<Iterator,int(),Skipper>)おく必要があります。
+  my_grammar() : my_grammar::base_type(start_, "my_grammar") {
+    start_ = qi::int_; // スタートのルールを記述します(パーサ基本の通り)。
   }
 };
 
@@ -66,7 +70,6 @@ int main() {
 ## ルール
 
   パーサ基本で触れたように、ルールは Iterator(入力) と Skipper(コメントなどの入力をスキップするルール) と 解析された値の型(属性) から構成されます。
-  以降、namespace qi = boost::spirit::qi; namespace ph = boost::pheonix; は省略していきます。    
 
   qi::rule は、  
 ```
@@ -79,7 +82,7 @@ int main() {
 | template parameter | 説明 |
 |:--|:--|
 | Iterator | 入力値のイテレータ型です。 |
-| Signature | ルールの値型(属性)です。何も返したくない場合 qi::unused_type() を指定します。それ以外は インスタンス型を指定します。|
+| Signature | ルールの値型(属性)です。何も返したくない場合 qi::unused_type() を指定します。それ以外は インスタンス関数型を指定します。|
 | Skipper | コメントの文法(ルール)を指定します。Iterator 型は同じでなければなりません。|
 | Locals | ローカルのプリミティブ型集合です。難しいので、ここでは扱いません。|
 
