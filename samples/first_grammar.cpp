@@ -1,24 +1,3 @@
-# ルールを書く
-
-　パーサ基本を習得すれば、ルールを記述し構文(grammar)を構築する下地が整ったと言えます。  
-  パーサを組み合わせてルールを構築し、ルールを組み合わせて構文(grammar)を構築します。  
-  
-  以降、解析には、parse ではなく、Skipper を指定できる phrase_parse 関数を使用していきます。  
-
-```
-  template <typename Iterator, typename Expr, typename Skipper,   
-      typename Attr1, typename Attr2, ..., typename AttrN>  
-  inline bool phrase_parse(  
-	  Iterator& first, Iterator last,  
-    const Expr& expr,  
-    const Skipper& skipper,  
-    Attr1& attr1, Attr2& attr2, ..., AttrN& attrN  
-  );  
-```
-
-応用のコード
-```
-c++:応用のコード
 #include <boost/spirit/include/qi.hpp>  // boost::spirit::qi を利用します
 #include <iostream>
 #include <string>
@@ -61,26 +40,3 @@ int main() {
   std::cout << n << std::endl; // 解析された結果を確認します。
   return 0;
 }
-```
-
-## ルール
-
-  パーサ基本で触れたように、ルールは Iterator(入力) と Skipper(コメントなどの入力をスキップするルール) と 解析された値の型(属性) から構成されます。
-  以降、namespace qi = boost::spirit::qi; namespace ph = boost::pheonix; は省略していきます。    
-
-  qi::rule は、  
-```
-  template <typename Iterator, typename A1, typename A2, typename A3>  
-  qi::rule<Iterator, A1, A2, A3>  
-```
-  Iterator はイテレータ、A1, A2, A3 は、Signature、Skipper, Locals の何れかです。
-  A1...A3 は boost::mpl::vector により実装されています。
-
-| template parameter | 説明 |
-|:--|:--|
-| Iterator | 入力値のイテレータ型です。 |
-| Signature | ルールの値型(属性)です。何も返したくない場合 qi::unused_type() を指定します。それ以外は インスタンス型を指定します。|
-| Skipper | コメントの文法(ルール)を指定します。Iterator 型は同じでなければなりません。|
-| Locals | ローカルのプリミティブ型集合です。難しいので、ここでは扱いません。|
-
-

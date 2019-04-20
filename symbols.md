@@ -42,10 +42,10 @@ int main() {
     ("blue", Color::blue)
   ;
 
-	std::string input = "green";
-	Color c;
-	qi::parse( input.begin(), input.end(), color_, c );
-	std::cout << c << std::endl;
-	return 0;
+  std::string input = "green";
+  Color c;
+  qi::parse( input.begin(), input.end(), color_, c );
+  std::cout << c << std::endl;
+  return 0;
 }
 ```
