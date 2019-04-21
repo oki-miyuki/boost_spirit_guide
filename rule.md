@@ -109,3 +109,8 @@ qi::rule<Iterator, qi::unused_type(), Skipper> foo_rule = "foo(" >> str_rule >> 
   };
 ```
 
+  SIGNATURE は、構文の値型(属性)です。インスタンス関数型を指定します。  
+  注意点として、grammar の SIGNATURE と、base_type の コンストラクタに引き渡す qi::rule の SIGNATURE が一致している必要があります。  
+
+
+
