@@ -31,11 +31,11 @@ c++:char 例
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "a";
-	char n;
-	qi::parse( input.begin(), input.end(), qi::standard::char_, n );
-	std::cout << n << std::endl;
-	return 0;
+  std::string input = "a";
+  char n;
+  qi::parse( input.begin(), input.end(), qi::standard::char_, n );
+  std::cout << n << std::endl;
+  return 0;
 }
 ```
 
@@ -50,12 +50,12 @@ c++:wchar 例
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::wstring input = L"日";
-	wchar_t n;
-	qi::parse( input.begin(), input.end(), qi::standard_wide::char_, n );
-	std::wcout.imbue(std::locale(""));
-	std::wcout << n << std::endl;
-	return 0;
+  std::wstring input = L"日";
+  wchar_t n;
+  qi::parse( input.begin(), input.end(), qi::standard_wide::char_, n );
+  std::wcout.imbue(std::locale(""));
+  std::wcout << n << std::endl;
+  return 0;
 }
 ```
 
@@ -85,13 +85,13 @@ c++:文字列定数 例
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "こんにちは"; // Windows では SJIS解釈、他では UTF-8解釈
-	auto s = input.begin();
-	auto e = input.end();
-	qi::parse( s, e, qi::lit("こんにちは") );
-	//qi::parse( s, e, qi::lit("こんにちわ") );
-	std::cout << ((s == e) ? "マッチ" : "エラー") << std::endl;
-	return 0;
+  std::string input = "こんにちは"; // Windows では SJIS解釈、他では UTF-8解釈
+  auto s = input.begin();
+  auto e = input.end();
+  qi::parse( s, e, qi::lit("こんにちは") );
+  //qi::parse( s, e, qi::lit("こんにちわ") );
+  std::cout << ((s == e) ? "マッチ" : "エラー") << std::endl;
+  return 0;
 }
 ```
   qi::parse に渡されるイテレータは入力値の解析範囲を示します。  
@@ -121,12 +121,12 @@ c++:文字列定数2 例
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::wstring input = L"こんにちは";
-	std::wstring n;
-	qi::parse( input.begin(), input.end(), +qi::standard_wide::char_, n );
-	std::wcout.imbue(std::locale(""));
-	std::wcout << n << std::endl;
-	return 0;
+  std::wstring input = L"こんにちは";
+  std::wstring n;
+  qi::parse( input.begin(), input.end(), +qi::standard_wide::char_, n );
+  std::wcout.imbue(std::locale(""));
+  std::wcout << n << std::endl;
+  return 0;
 }
 ```
 
@@ -153,11 +153,11 @@ c++:範囲指定 例
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "FBIJHCBFIJXXX";
-	std::string n;
-	qi::parse( input.begin(), input.end(), +qi::standard::char_('A', 'J'), n );
-	std::cout << n << std::endl; // Xはルールにマッチしないので FBIJHCBFIJ まで表示されます
-	return 0;
+  std::string input = "FBIJHCBFIJXXX";
+  std::string n;
+  qi::parse( input.begin(), input.end(), +qi::standard::char_('A', 'J'), n );
+  std::cout << n << std::endl; // Xはルールにマッチしないので FBIJHCBFIJ まで表示されます
+  return 0;
 }
 ```
   文字の範囲指定で、SJIS、UTF-8(ASCII以外の文字)は指定できません。  
@@ -188,12 +188,12 @@ c++:文字指定(個別に文字を指定) 例
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::wstring input = L"FBIJHABFIJXXX";
-	std::wstring n;
-	qi::parse( input.begin(), input.end(), +qi::standard_wide::char_(L"ABFHIJ"), n );
-	std::wcout.imbue(std::locale(""));
-	std::wcout << n << std::endl;
-	return 0;
+  std::wstring input = L"FBIJHABFIJXXX";
+  std::wstring n;
+  qi::parse( input.begin(), input.end(), +qi::standard_wide::char_(L"ABFHIJ"), n );
+  std::wcout.imbue(std::locale(""));
+  std::wcout << n << std::endl;
+  return 0;
 }
 ```
 

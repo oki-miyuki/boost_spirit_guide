@@ -24,11 +24,11 @@ namespace qi = boost::spirit::qi;
 enum class Color { red, green, blue };
 
 std::ostream& operator << (std::ostream& os, Color c) {
-	if( c == Color::red ) os << "red";
-	else if( c == Color::green ) os << "green";
-	else if( c == Color::blue )  os << "blue";
-	else os << "unknown";
-	return os;
+  if( c == Color::red ) os << "red";
+  else if( c == Color::green ) os << "green";
+  else if( c == Color::blue )  os << "blue";
+  else os << "unknown";
+  return os;
 }
 
 qi::symbols<char,Color>  color_;

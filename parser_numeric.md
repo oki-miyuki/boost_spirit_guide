@@ -27,11 +27,11 @@ c++:double 例
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "8e5";
-	double n;
-	qi::parse( input.begin(), input.end(), qi::double_, n );
-	std::cout << std::fixed << n << std::endl;
-	return 0;
+  std::string input = "8e5";
+  double n;
+  qi::parse( input.begin(), input.end(), qi::double_, n );
+  std::cout << std::fixed << n << std::endl;
+  return 0;
 }
 ```
 
@@ -46,11 +46,11 @@ c++:float 例
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "3.14125";
-	float n;
-	qi::parse( input.begin(), input.end(), qi::float_, n );
-	std::cout << n << std::endl;
-	return 0;
+  std::string input = "3.14125";
+  float n;
+  qi::parse( input.begin(), input.end(), qi::float_, n );
+  std::cout << n << std::endl;
+  return 0;
 }
 ```
 
@@ -65,11 +65,11 @@ c++:unsigned short 例
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "256";
-	unsigned short n;
-	qi::parse( input.begin(), input.end(), qi::ushort_, n );
-	std::cout << n << std::endl;
-	return 0;
+  std::string input = "256";
+  unsigned short n;
+  qi::parse( input.begin(), input.end(), qi::ushort_, n );
+  std::cout << n << std::endl;
+  return 0;
 }
 ```
 

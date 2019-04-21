@@ -30,11 +30,11 @@ C++: *( A % B )
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "12345 223  54321";
-	std::vector<int> v;
-	qi::parse( input.begin(), input.end(), *( qi::int_ % +qi::standard::blank), v ); 
-	for(int n: v) { std::cout << n << std::endl; }
-	return 0;
+  std::string input = "12345 223  54321";
+  std::vector<int> v;
+  qi::parse( input.begin(), input.end(), *( qi::int_ % +qi::standard::blank), v ); 
+  for(int n: v) { std::cout << n << std::endl; }
+  return 0;
 }
 ```
     
@@ -50,14 +50,14 @@ C++: A >> B
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "12345,abcd,54321";
-	int n, m;
-	std::string s;
-	qi::parse( input.begin(), input.end(), 
-	  qi::int_ >> ',' >> +(qi::standard::char_ - ',') >> ',' >> qi::int_,
-	  n, s, m ); 
-	std::cout << n << "," << s << "," << m << std::endl;
-	return 0;
+  std::string input = "12345,abcd,54321";
+  int n, m;
+  std::string s;
+  qi::parse( input.begin(), input.end(), 
+    qi::int_ >> ',' >> +(qi::standard::char_ - ',') >> ',' >> qi::int_,
+    n, s, m ); 
+  std::cout << n << "," << s << "," << m << std::endl;
+  return 0;
 }
 ```
   qi::lit(',') は implicit conversion(暗黙の型変換)により ',' と省略して記述する事ができます。   
@@ -76,19 +76,19 @@ C++: A > B
 namespace qi = boost::spirit::qi;
 
 int main() {
-	std::string input = "dog(2pochi),cat(tama)";
-	std::vector<std::string> v;
-	qi::parse( input.begin(), input.end(), 
-	  *( 
-	    (
-	     //("dog(" >> +qi::standard::char_("a-z")  >> ')')
-	     ("dog(" > +qi::standard::char_("a-z")  > ')')
-	     | (+qi::omit[qi::standard::alpha] > '(' > +qi::standard::alnum > ')')
-	    ) % ','
-	  )
-	  , v ); 
-	for(std::string n: v) { std::cout << n << std::endl; }
-	return 0;
+  std::string input = "dog(2pochi),cat(tama)";
+  std::vector<std::string> v;
+  qi::parse( input.begin(), input.end(), 
+    *( 
+      (
+       //("dog(" >> +qi::standard::char_("a-z")  >> ')')
+       ("dog(" > +qi::standard::char_("a-z")  > ')')
+       | (+qi::omit[qi::standard::alpha] > '(' > +qi::standard::alnum > ')')
+      ) % ','
+    )
+    , v ); 
+  for(std::string n: v) { std::cout << n << std::endl; }
+  return 0;
 }
 ```
   ルール中に出てくる qi::omit は、後述するパーサ・ディレクティブで説明します。  
