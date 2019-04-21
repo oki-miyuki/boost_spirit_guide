@@ -86,4 +86,26 @@ int main() {
 | Skipper | コメントの文法(ルール)を指定します。Iterator 型は同じでなければなりません。|
 | Locals | ローカルのプリミティブ型集合です。難しいので、ここでは扱いません。|
 
+```
+C++: ルール例
+qi::rule<Iterator, std::string(), Skipper> str_rule = +qi:char_("A-Za-z0-9");
+qi::rule<Iterator, std::vector<int>, Skipper> nums_rule = *(qi::int_ % ',');
+qi::rule<Iterator, qi::unused_type(), Skipper> foo_rule = "foo(" >> str_rule >> ':' >> nums_rule >> ')';
+```
+
+## 構文(grammar)
+
+  ルールをまとめて構文を構築します。構文もルール同様 Iterator(入力) と Skipper(コメントなどの入力をスキップするルール) と 解析された値の型(属性) から構成されます。  
+  qi::grammar を継承する形で構文を構築します。  
+
+  本ガイドでは、Iterator と Skipper を交換可能な形で実装していきます。  
+```
+  template <typename Iterator, typename Skipper>
+  struct my_grammar : qi::grammar<Iterator, SIGNATURE, Skipper> {
+    my_grammar() : my_grammar::base_type<Iterator, SIGNATURE, Skipper>( start_, "my_grammar" ) {
+      start_ = ...;
+    }
+    qi::rule<Iterator, SIGNATURE, Skipper> start_;
+  };
+```
 
