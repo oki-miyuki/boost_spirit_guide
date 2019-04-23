@@ -1,7 +1,7 @@
 # セマンティック・アクション
 
   パーサに対して[]オペレータでアクションを記述する事ができます。  
-  関数コール、boost::pheonix による属性値の操作が使用できます。
+  関数コール、boost::Phoenix による属性値の操作が使用できます。
 
 ## 関数コール
 
@@ -116,14 +116,14 @@ int main() {
 | boost::lambda | boost::lambda | boost::lambda::_1 |
 | boost::phoenix | qi | qi::_val, qi::_1, qi::_2, qi::_3 |
 
-## Pheonix
+## Phoenix
 
   動作や式を埋め込む事ができます。  
   機能が豊富、かつ、説明が難しいのでサンプルを見ていきましょう。  
   namespace qi = boost::spirit::qi;  
   namespace ph = boost::phoenix;  
   
-### Pheonix placeholders
+### Phoenix placeholders
   placeholders として使用できるのがルールの属性(出力先)を示す qi::_val と、  
   ルール中のパーサに対応する値 qi::\_1, qi::\_2, ... です。
 
@@ -148,7 +148,7 @@ int main() {
   qi::int\_ でパースされた値 qi::\_1 を2倍して、qi::int\_ の属性値として代入しています。  
   qi::\_2 以降は、基本の段階では使用しません。
 
-### Pheonix ref
+### Phoenix ref
   変数 variable の参照を ph::ref(variable) で埋め込む事ができます。  
 
 ph::ref 例
@@ -173,7 +173,7 @@ int main() {
 }
 ```
 
-### Pheonix bind
+### Phoenix bind
   class メンバ変数 variable の参照を ph::bind(&class::variable, instance) で埋め込む事ができます。  
 
 ph::bind メンバー変数 例
@@ -202,4 +202,8 @@ int main() {
   return 0;
 }
 ```
-Pheonix には、他にもたくさんの機能があります。基本では、この辺にしておきます。
+
+### Phoenix push_back
+
+
+Phoenix には、他にもたくさんの機能があります。基本では、この辺にしておきます。
