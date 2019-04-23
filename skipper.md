@@ -7,7 +7,7 @@
   組込のSkipperとして、文字分類パーサが用意されています。  
   ns は、qi::standard, qi::standard\_wide, qi::ascii, qi::iso8859\_1 の何れかです。  
   
-| 文字分類 | ルール | インスタンス関数型 |
+| 文字分類 | ルール | コメント構文型 |
 |:--|:--|:--|
 |ブランク|ns::blank|ns::blank_type|
 |スペース|ns::space|ns::space_type|　
