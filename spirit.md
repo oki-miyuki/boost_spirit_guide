@@ -27,3 +27,4 @@ JSONパーサ、電卓、コンフィグの読み込み、オレオレ・スク�
  * [Nバイト文字の処理](rule_nbytechars.md)
  * [コメント構文(Skipper)](skipper.md)
  * [構造体を読む(Fusion)](fusion.md)
+ * [エラー箇所の表示(PositionIterator)](position_iterator.md)
