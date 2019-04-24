@@ -89,7 +89,7 @@ int main() {
 ```
 C++: ルール例
 qi::rule<Iterator, std::string(), Skipper> str_rule = +qi:char_("A-Za-z0-9");
-qi::rule<Iterator, std::vector<int>, Skipper> nums_rule = *(qi::int_ % ',');
+qi::rule<Iterator, std::vector<int>(), Skipper> nums_rule = *(qi::int_ % ',');
 qi::rule<Iterator, qi::unused_type(), Skipper> foo_rule = "foo(" >> str_rule >> ':' >> nums_rule >> ')';
 ```
 

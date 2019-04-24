@@ -26,7 +26,7 @@ struct my_grammar : qi::grammar<Iterator, int(), Skipper> {
 };
 
 int main() {
-  std::string input = "// これはコメントです。\n /* これもコメント */ 12345";
+  std::string input = "// これはコメントです。\n  // コメント\n /* これもコメント */ 12345";
   int n;
   typedef c_comment_grammar<std::string::iterator> c_comment_type;
   c_comment_type comment;
