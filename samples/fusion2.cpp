@@ -1,11 +1,3 @@
-# std::pairを読む(fusion)
-
-  boost/fusion/include/std_pair.hpp というヘッダーに  
-  std::pair<T,U> を扱うための魔法が用意されています。  
-  単に include するだけで動作します。  
-
-std::pair<int,int> 例
-```
 #include <boost/spirit/include/qi.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 #include <iostream>
@@ -33,4 +25,3 @@ int main() {
   }
   return 0;
 }
-```
