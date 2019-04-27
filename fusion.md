@@ -5,8 +5,8 @@
 
 ```
   BOOST_FUSION_ADAPT_STRUCT(  
-	  構造体名  
-	  (メンバ変数の型, メンバ変数名)  
+    構造体名  
+    (メンバ変数の型, メンバ変数名)  
     ... 繰り返し  
   )  
 ```
@@ -23,20 +23,20 @@ C++: 構造体を読む例
 namespace qi = boost::spirit::qi;
 
 struct foo {
-	int index_;
-	std::string name_;
-	bool flag1_;
-	bool flag2_;
-	long val_;
+  int index_;
+  std::string name_;
+  bool flag1_;
+  bool flag2_;
+  long val_;
 };
 
 BOOST_FUSION_ADAPT_STRUCT(
-	foo,
-	(int,         index_)
-	(std::string, name_)
-	(bool,        flag1_)
-	(bool,        flag2_)
-	(long,        val_)
+  foo,
+  (int,         index_)
+  (std::string, name_)
+  (bool,        flag1_)
+  (bool,        flag2_)
+  (long,        val_)
 )
 
 template <typename Iterator, typename Skipper>
@@ -44,13 +44,13 @@ struct my_grammar : qi::grammar<Iterator, std::vector<foo>(), Skipper> {
   qi::rule<Iterator, std::vector<foo>(), Skipper>  start_;
   my_grammar() : my_grammar::base_type(start_, "my_grammar") {
     start_ = *(
-	    '{' 
-	      >> qi::int_ >> ',' 
-	      >> +qi::standard::alnum >> ','
-	      >> qi::bool_ >> ','
-	      >> qi::bool_ >> ','
-	      >> qi::long_ >>
-	    '}'
+      '{' 
+        >> qi::int_ >> ',' 
+        >> +qi::standard::alnum >> ','
+        >> qi::bool_ >> ','
+        >> qi::bool_ >> ','
+        >> qi::long_ >>
+      '}'
     );
   }
 };
