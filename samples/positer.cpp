@@ -5,7 +5,7 @@
 #include <functional>
 #include <string>
 #include <iomanip>
-//#include <stringstream>
+#include <strstream>
 
 #include "position_helper.hpp"
 #include "cpp_comment_grammar.hpp"
@@ -46,15 +46,13 @@ namespace {
   // position_iterator から構文解析に失敗した位置情報を出力する
   std::string toErrorMsg(const pos_iterator_type& iter, const char* fn) {
     const boost::spirit::classic::file_position_base<std::string>& pos = iter.get_position();
-    //std::tostringstream msg;
-    //msg <<
-    std::cout <<
+    std::ostringstream msg;
+    msg <<
       "parse error at file :" << fn <<
       " line " << pos.line << " column " << pos.column << "\r\n" <<
       "'" << iter.get_currentline() << "'" << "\r\n" <<
       std::setw(pos.column) << " " << "^- here\r\n";
-    //return msg.str();
-    return "";
+    return msg.str();
   }
 }
 
