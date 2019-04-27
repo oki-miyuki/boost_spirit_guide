@@ -21,18 +21,21 @@
 
 C++ スタイルのコメント
 ```
-C++: C++スタイルコメント
+C++: cpp_comment_grammar.hpp
+#include <boost/spirit/include/qi.hpp>
+
 template <typename Iterator>
-struct c_comment_grammar : qi::grammar<Iterator> {
+struct cpp_comment_grammar : boost::spirit::qi::grammar<Iterator> {
 public:
-  c_comment_grammar() : c_comment_grammar::base_type(start) {
-    start = qi::standard::blank | comment_nest_p | comment_p;
+  cpp_comment_grammar() : cpp_comment_grammar::base_type(start) {
+    namespace qi = boost::spirit::qi;
+    start = qi::standard::space | comment_nest_p | comment_p;
     comment_nest_p = qi::lit("/*") > *(qi::standard::char_ - qi::lit("*/") - qi::eoi) > qi::lit("*/");
     comment_p = qi::lit("//") > *(qi::standard::char_ - qi::eol -qi::eoi) > (qi::eol | qi::eoi);
   }
-  qi::rule<Iterator> start;
-  qi::rule<Iterator> comment_nest_p;
-  qi::rule<Iterator> comment_p;
+  boost::spirit::qi::rule<Iterator> start;
+  boost::spirit::qi::rule<Iterator> comment_nest_p;
+  boost::spirit::qi::rule<Iterator> comment_p;
 };
 ```
 
@@ -43,20 +46,9 @@ C++: C++スタイルコメント利用例
 #include <iostream>
 #include <string>
 
-namespace qi = boost::spirit::qi;
+#include "cpp_comment_grammar.hpp"
 
-template <typename Iterator>
-struct c_comment_grammar : qi::grammar<Iterator> {
-public:
-  c_comment_grammar() : c_comment_grammar::base_type(start) {
-    start = qi::standard::blank | comment_nest_p | comment_p;
-    comment_nest_p = qi::lit("/*") > *(qi::standard::char_ - qi::lit("*/") - qi::eoi) > qi::lit("*/");
-    comment_p = qi::lit("//") > *(qi::standard::char_ - qi::eol -qi::eoi) > (qi::eol | qi::eoi);
-  }
-  qi::rule<Iterator> start;
-  qi::rule<Iterator> comment_nest_p;
-  qi::rule<Iterator> comment_p;
-};
+namespace qi = boost::spirit::qi;
 
 template <typename Iterator, typename Skipper>
 struct my_grammar : qi::grammar<Iterator, int(), Skipper> {

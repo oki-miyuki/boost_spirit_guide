@@ -3,6 +3,11 @@
   パーサに対して[]オペレータでアクションを記述する事ができます。  
   関数コール、boost::Phoenix による属性値の操作が使用できます。
 
+  後述するルールを構築するようになると、セマンティック・アクションの指定でコンパイルエラーに遭遇する事があります。  
+  その場合、ルールの定義と別にしてセマンティック・アクションを呼ぶと良いでしょう。  
+  旧バージョンにおいては %= という変則的なオペレータがありました。 
+  筆者の指針として関数コール系のセマンティック・アクションは、ルールの定義と分けることにしています。  
+
 ## 関数コール
 
   ルールの返す値型(属性)の const 参照を引数とする関数を呼び出す事ができます。
@@ -204,6 +209,38 @@ int main() {
 ```
 
 ### Phoenix push_back
+  コンテナに対して push_back を実行できます。  
+  ph::push_back( コンテナ参照, 値 )の形で指定します。  
 
+ph::push_back 例
+```
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/phoenix.hpp>
+#include <iostream>
+#include <vector>
+
+namespace qi = boost::spirit::qi;
+namespace ph = boost::phoenix;
+
+struct foo {
+	std::vector<int> value_;
+
+  void parse(const std::string& input) {
+    qi::parse( input.begin(), input.end(), 
+      *(qi::int_[ph::push_back(ph::bind( &foo::value_, this ), qi::_1 - 1)] % ',') );
+    for( int n: value_) {
+      std::cout << n << ","; 
+    } 
+    std::cout << std::endl;
+  }
+};
+
+int main() {
+	std::string input = "2,4,6,8";
+	foo f;
+	f.parse(input);
+	return 0;
+}
+```
 
 Phoenix には、他にもたくさんの機能があります。基本では、この辺にしておきます。

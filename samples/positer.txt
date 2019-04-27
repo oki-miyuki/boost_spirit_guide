@@ -1,0 +1,6 @@
+ rule1(1)
+ rule3(hello)
+ rule2(-1)
+ rule1(hiho)
+ //rule4(hoge)
+ rule1(3)

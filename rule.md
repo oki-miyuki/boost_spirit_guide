@@ -52,7 +52,7 @@ int main() {
   int n;  // 解析された結果を格納するための変数です。この部分は記述する構文に応じて変わります。
   my_grammar<
     std::string::iterator,    // Iterator 型を具体的に指定します
-    qi::standard::space_type  // Skipper として qi::standard::space に対応するインスタンス関数型
+    qi::standard::space_type  // Skipper として qi::standard::space に対応する構文型
   > myg; // 構文
   qi::phrase_parse( // 解析をする関数本体です
     input.begin(), input.end(), // 解析させる入力の指定 
