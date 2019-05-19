@@ -21,7 +21,7 @@ struct my_grammar : qi::grammar<Iterator, unsigned(), Skipper> {
   qi::uint_parser<unsigned,10,0,255>       sample_;
   my_grammar() : my_grammar::base_type(start_, "my_grammar") {
     start_ = ( 
-      "rgb(" > sample_[d] > ',' > sample_[d] > ',' > sample_[d] > ')'
+      "rgb(" > sample_ > ',' > sample_ > ',' > sample_ > ')'
       )[qi::_val = ((qi::_1 << 16) + (qi::_2 << 8) + qi::_3)];
   }
 };
