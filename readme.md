@@ -29,3 +29,5 @@ JSONパーサ、電卓、コンフィグの読み込み、オレオレ・スク�
  * [構造体を読む(Fusion)](fusion.md)
  * [std::pairを利用する(Fusion)](fusion2.md)
  * [エラー箇所の表示(PositionIterator)](position_iterator.md)
+ * [数値パーサ2](parser_numeric2.md)
+ * [フェニックスとプレースホルダ](phoenix2.md)
